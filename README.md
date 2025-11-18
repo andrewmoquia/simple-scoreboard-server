@@ -111,7 +111,7 @@ This module handles live score updating, score storage, and real-time scoreboard
 
 ## Execution Flow (Diagram)
 ### POST `/user/register`
-<img width="500" height="636" alt="image" src="https://github.com/user-attachments/assets/56a01c34-101c-42ad-b289-4623abef77ae" />
+<img width="500" height="636" alt="image" src="https://github.com/user-attachments/assets/9aa2c445-3433-4435-ad0c-dc602b6d8319" />
 
 ### POST `/user/login`
 <img width="500" height="636" alt="image" src="https://github.com/user-attachments/assets/36517868-1f15-4b81-af58-3f13f859c662" />
