@@ -8,6 +8,7 @@ For this challenge, a specification is needed to create for a software module on
 * [API Specification](#api-specification)
 * [Execution Flow (Diagram)](#execution-flow-diagram)
 * [Database Schema](#database-schema)
+* [Security Mechanisms](#security-mechanisms)
 * [Additional Comments & Improvement Suggestions](#additional-comments--improvement-suggestions)
   
 ## Overview
@@ -134,10 +135,21 @@ This module handles live score updating, score storage, and real-time scoreboard
 }
 ```
 
-## Additional Comments & Improvement Suggestions
-1. Add a "Score History Log"
-- Useful for detecting suspicious score patterns.
+## Security Mechanisms
+1. JWT-based Authentication
+- Every score update requires a valid JWT.
+- User's login session expires at least for 24 hours upon creation.
 2. Server-side Score Validation
 - Score increments must be happen on the server not directly thorugh the client.
-3. Add Score Reset or Seasonal Leaderboards
+3. Logging & Monitoring
+- Monitor invalid login or score update attempts. 
+- Flag or ban users with suspicious activities.
+
+## Additional Comments & Improvement Suggestions
+1. Add Rank Based Rewards
+- Implement a reward system tied to player rankings on the scoreboard.
+- Players earn increasingly valuable rewards as they move up the leaderboard.
+- Encourages consistent engagement and competition, motivating players to actively participate and improve their rank to obtain better rewards.
+- Rewards can include in-game currency, items, badges, or exclusive perks.
+2. Add Score Reset or Seasonal Leaderboards
 - Boosts long-term engagement.
