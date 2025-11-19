@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "outDir": "build",
+        "module": "commonjs",
+        "target": "es5",
+        "lib": [
+            "es5",
+            "dom"
+        ],
+        "sourceMap": false,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "rootDir": "src",
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+    },
+    "include": [
+        "src",
+        "types"
+    ],
+    "exclude": [
+        "node_modules",
+        "build"
+    ]
+}

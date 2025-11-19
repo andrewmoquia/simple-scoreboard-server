@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Scoreboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 300px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Top 10 Live Scoreboard</h1>
+
+  <table id="scoreboard">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="no-data">
+        <td colspan="3">Waiting for scores...</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Socket.IO -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+
+    // Correct: connect only to base server (not /user/top10)
+    const socket = io("http://localhost:8181");
+
+    const tbody = document.querySelector("#scoreboard tbody");
+
+    // Shared render function
+    function renderTable(top10) {
+      tbody.innerHTML = "";
+
+      if (!top10 || top10.length === 0) {
+        tbody.innerHTML = `<tr class="no-data"><td colspan="3">No scores yet</td></tr>`;
+        return;
+      }
+
+      top10.forEach((user, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${user.username}</td>
+          <td>${user.score}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Load initial Top 10 from API
+    fetch("http://localhost:8181/user/top10")
+      .then(res => res.json())
+      .then(data => renderTable(data))
+      .catch(() => {
+        tbody.innerHTML = `<tr class="no-data"><td colspan="3">Failed to load</td></tr>`;
+      });
+
+    // Live updates
+    socket.on("scoreboardUpdate", (top10) => {
+      renderTable(top10);
+    });
+
+  </script>
+</body>
+
+</html>
